@@ -1,7 +1,7 @@
 # AGENTS.md — places
 
 Expo 57 + React 19 + React Native 0.86 + TypeScript strict + NativeWind (Tailwind 3.4).
-Entry: `App.tsx` (via `node_modules/expo/AppEntry.js`). Greenfield, no backend/auth yet.
+Entry: `expo-router/entry` with routes in `src/app/`. Scheme: `go2s`. Greenfield, no backend/auth yet.
 
 ## Setup & run (bun only)
 
@@ -25,19 +25,20 @@ Config: `jest.config.js`, `jest-setup.js`.
 
 ## Layout
 
-- `App.tsx`: root composition only (`SafeAreaProvider`, `global.css`, screen). No business logic.
+- `src/app/`: file-based routes (Expo Router). `_layout.tsx` is root composition only
+  (`SafeAreaProvider`, `global.css`, `Stack`). `index.tsx` is `/`. New page = new file
+  (e.g. `src/app/search.tsx` → `/search`). No web support (iOS/Android only).
 - `src/components/`: shared presentational components (`ScreenContent.tsx`, `EditScreenInfo.tsx` pattern).
 - `__tests__/`: Jest tests as `*-test.{ts,tsx}` mirroring `src/` (e.g. `__tests__/ScreenContent-test.tsx`).
 - `assets/`: icons, splash, favicon. Referenced from `app.json`.
 - `app.json`, `babel.config.js`, `metro.config.js`, `tailwind.config.js`, `global.css`: styling/native chain — change together.
 - `tsconfig.json`: `strict:true`, `baseUrl:"."`, alias `@/* -> ./src/*`.
 
-If introducing Expo Router, extend `tailwind.config.js content` and document here.
-
 ## Code style
 
 - TypeScript strict. Type props with `interface XProps`. No `any` except to unblock with `// TODO:`.
-- Functional components + named exports only. No default component exports, no class components.
+- Functional components + named exports only, except `src/app/` route files which require
+  `export default` per Expo Router convention. No class components.
 - Styling with NativeWind only. Inline `className` strings, never `StyleSheet.create`, `style={}`, or CSS modules — except when a platform API (e.g. Animated/Reanimated values) cannot be expressed as classes:
 
 ```tsx
@@ -51,7 +52,7 @@ export const Foo: React.FC<FooProps> = ({ title }) => (
 - Prettier: `singleQuote, printWidth:100, bracketSameLine:true, trailingComma:es5`. Tailwind classes sorted by `prettier-plugin-tailwindcss` — do not hand-sort.
 - Avoid comments unless absolutely necessary — e.g. to explain why a specific approach was
   chosen over an intuitive alternative. Never narrate what the code does.
-- Keep `global.css` imported in `App.tsx`. Keep `withNativeWind(..., {input:'./global.css'})` in `metro.config.js`.
+- Keep `global.css` imported in `src/app/_layout.tsx`. Keep `withNativeWind(..., {input:'./global.css'})` in `metro.config.js`.
 - `tailwind.config.js`: `preset: nativewind/preset` and `content` covering every `*.{js,ts,tsx}` dir with `className`.
 
 ## Never do

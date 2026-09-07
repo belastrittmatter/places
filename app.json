@@ -2,12 +2,14 @@
   "expo": {
     "name": "my-expo-app",
     "slug": "my-expo-app",
+    "scheme": "go2s",
     "version": "1.0.0",
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "experiments": {
-      "tsconfigPaths": true
+      "tsconfigPaths": true,
+      "typedRoutes": true
     },
     "plugins": [
       [
@@ -32,7 +34,8 @@
           "locationAlwaysAndWhenInUsePermission": "places shows your location on the map and nearby places.",
           "isIosBackgroundLocationEnabled": false
         }
-      ]
+      ],
+      "expo-router"
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",

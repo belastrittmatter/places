@@ -49,6 +49,8 @@ export const Foo: React.FC<FooProps> = ({ title }) => (
 ```
 
 - Prettier: `singleQuote, printWidth:100, bracketSameLine:true, trailingComma:es5`. Tailwind classes sorted by `prettier-plugin-tailwindcss` — do not hand-sort.
+- Avoid comments unless absolutely necessary — e.g. to explain why a specific approach was
+  chosen over an intuitive alternative. Never narrate what the code does.
 - Keep `global.css` imported in `App.tsx`. Keep `withNativeWind(..., {input:'./global.css'})` in `metro.config.js`.
 - `tailwind.config.js`: `preset: nativewind/preset` and `content` covering every `*.{js,ts,tsx}` dir with `className`.
 
@@ -60,13 +62,16 @@ export const Foo: React.FC<FooProps> = ({ title }) => (
 - Do not use `npm`/`yarn`/`pnpm` commands. This repo uses `bun`.
 - Do not commit `node_modules/`, `.expo/`, `dist/`, `web-build/`.
 - Do not add auth/secrets handling without updating this file with storage + review rules.
+- Do not commit files / create pull requests before explicitly being told to do so.
+- Never edit a file from memory — always `Read` it first in the current session and derive
+  edits from the read result, unless the user explicitly says otherwise.
 
 ## Verification before done
 
 1. `bunx tsc --noEmit` clean.
 2. `bun run lint` clean.
-3. `bunx expo start --clear` boots without Metro errors, or `bun run web` builds.
-4. No new `StyleSheet.create` — grep must be empty unless justified in PR.
+3. `bun run test` — all tests pass before submitting a PR.
+4. `bunx expo start --clear` boots without Metro errors, or `bun run web` builds.
 5. Keep diff minimal; update this file if you change commands, layout, or styling chain.
 
 ## Commit etiquette

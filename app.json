@@ -17,14 +17,35 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-status-bar"
+      "expo-status-bar",
+      [
+        "expo-maps",
+        {
+          "requestLocationPermission": true,
+          "locationPermission": "places shows your location on the map and nearby places."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "places shows your location on the map and nearby places.",
+          "locationAlwaysAndWhenInUsePermission": "places shows your location on the map and nearby places.",
+          "isIosBackgroundLocationEnabled": false
+        }
+      ]
     ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.places.app",
+      "deploymentTarget": "18.0",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "places shows your location on the map and nearby places.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {

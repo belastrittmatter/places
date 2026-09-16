@@ -1,5 +1,6 @@
 import { Platform, Text, View } from 'react-native';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
+import NearbyPlacesBottomSheet from '@/components/NearbyPlacesBottomSheet';
 
 interface HomeScreenProps {
   latitude?: number;
@@ -39,6 +40,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           uiSettings={{ myLocationButtonEnabled: true }}
         />
       )}
+      <NearbyPlacesBottomSheet />
     </View>
   );
 };

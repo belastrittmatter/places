@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Platform, Text, View } from 'react-native';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
+import * as Location from 'expo-location';
 import NearbyPlacesBottomSheet from '@/components/NearbyPlacesBottomSheet';
 
 interface HomeScreenProps {
@@ -11,6 +13,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
   latitude = 37.78825,
   longitude = -122.4324,
 }) => {
+  const [coordinates, setCoordinates] = useState({ latitude, longitude });
+
+  useEffect(() => {
+    Location.requestForegroundPermissionsAsync().then(({ status }) => {
+      if (status !== 'granted') return;
+      Location.getCurrentPositionAsync({}).then(({ coords }) =>
+        setCoordinates({ latitude: coords.latitude, longitude: coords.longitude })
+      );
+    });
+  }, []);
+
   if (Platform.OS !== 'ios' && Platform.OS !== 'android') {
     return (
       <View className="flex-1 items-center justify-center" testID="home-map">
@@ -19,7 +32,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
     );
   }
 
-  const coordinates = { latitude, longitude };
+  const { latitude: lat, longitude: lng } = coordinates;
 
   return (
     <View className="flex-1" testID="home-map">
@@ -27,7 +40,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         <AppleMaps.View
           style={{ flex: 1 }}
           cameraPosition={{ coordinates, zoom: 12 }}
-          markers={[{ coordinates, title: 'Center' }]}
           properties={{ isMyLocationEnabled: true }}
           uiSettings={{ myLocationButtonEnabled: true }}
         />
@@ -35,12 +47,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         <GoogleMaps.View
           style={{ flex: 1 }}
           cameraPosition={{ coordinates, zoom: 12 }}
-          markers={[{ coordinates, title: 'Center' }]}
           properties={{ isMyLocationEnabled: true }}
           uiSettings={{ myLocationButtonEnabled: true }}
         />
       )}
-      <NearbyPlacesBottomSheet />
+      <NearbyPlacesBottomSheet latitude={lat} longitude={lng} />
     </View>
   );
 };

@@ -20,6 +20,9 @@ coverage/
 ios
 android
 
+# Local Expo module native sources are hand-written, not prebuild output
+!modules/nearby-places/ios/
+
 # macOS
 .DS_Store
 

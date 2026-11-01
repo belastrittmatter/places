@@ -11,17 +11,6 @@ body:
       placeholder: "Let users filter nearby places by open-now status."
     validations:
       required: true
-  - type: textarea
-    id: acceptance-criteria
-    attributes:
-      label: Acceptance Criteria
-      description: Concrete, testable conditions. The change is done when all are true.
-      value: |
-        - [ ]
-        - [ ] Unit test added for new logic (or explain why not)
-        - [ ] `bunx tsc --noEmit`, `bun run lint`, `bun run test` pass
-    validations:
-      required: true
   - type: dropdown
     id: area
     attributes:
@@ -56,22 +45,20 @@ body:
     validations:
       required: false
   - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Concrete, testable conditions. The change is done when all are true.
+      value: |
+        - [ ]
+        - [ ] Unit test added for new logic (or explain why not)
+        - [ ] `bunx tsc --noEmit`, `bun run lint`, `bun run test` pass
+    validations:
+      required: true
+  - type: textarea
     id: out-of-scope
     attributes:
       label: Out of Scope
       description: What must NOT change. Prevents over-building.
     validations:
       required: false
-  - type: dropdown
-    id: size
-    attributes:
-      label: Estimated Size
-      description: XS = one file, trivial. S = one component or module. M = several files plus tests. L = cross-cutting or native. XL = split it first.
-      options:
-        - "XS"
-        - "S"
-        - "M"
-        - "L"
-        - "XL (split before implementing)"
-    validations:
-      required: true

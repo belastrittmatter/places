@@ -62,3 +62,16 @@ body:
       description: What must NOT change. Prevents over-building.
     validations:
       required: false
+  - type: dropdown
+    id: size
+    attributes:
+      label: Estimated Size
+      description: XS = one file, trivial. S = one component or module. M = several files plus tests. L = cross-cutting or native. XL = split it first.
+      options:
+        - "XS"
+        - "S"
+        - "M"
+        - "L"
+        - "XL (split before implementing)"
+    validations:
+      required: true

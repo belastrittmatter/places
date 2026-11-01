@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "my-expo-app",
+      "name": "places",
       "dependencies": {
         "@expo/ui": "~57.0.17",
         "@gorhom/bottom-sheet": "^5.2.14",

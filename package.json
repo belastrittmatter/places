@@ -59,5 +59,6 @@
     "*.{js,jsx,ts,tsx,json}": "prettier --write"
   },
   "main": "expo-router/entry",
-  "private": true
+  "private": true,
+  "license": "AGPL-3.0-only"
 }

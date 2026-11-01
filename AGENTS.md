@@ -101,9 +101,9 @@ When given a GitHub issue (URL or number):
 1. Read the issue with `gh-axi issue` (or `gh issue view`). If Acceptance Criteria or
    Affected Area is missing or unclear, ask before coding.
 2. Work in a git worktree, never by switching branches in the user's checkout. It may hold
-   unrelated uncommitted work. Use a sibling directory so tsc, Jest and Metro never see nested
-   copies:
-   `git worktree add -b <type>/<issue#>-<slug> ../places-worktrees/<issue#>-<slug> main`
+   unrelated uncommitted work. Use the worktree root `~/worktrees/places/`, outside the repo, so
+   tsc, Jest and Metro never see nested copies:
+   `git worktree add -b <type>/<issue#>-<slug> ~/worktrees/places/<issue#>-<slug> main`
    then `bun install --frozen-lockfile` inside it. Branch `<type>` is a Conventional Commit type.
 3. Implement only the issue's Acceptance Criteria. Respect Out of Scope. Keep the smallest diff.
 4. Commit atomically: one logical change per commit, Conventional Commits. Each commit

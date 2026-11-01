@@ -1,6 +1,7 @@
 {
-  "name": "my-expo-app",
+  "name": "places",
   "version": "1.0.0",
+  "description": "Keep the places you love, from people you trust.",
   "scripts": {
     "android": "expo run:android",
     "ios": "expo run:ios",
@@ -58,5 +59,6 @@
     "*.{js,jsx,ts,tsx,json}": "prettier --write"
   },
   "main": "expo-router/entry",
-  "private": true
+  "private": true,
+  "license": "AGPL-3.0-only"
 }

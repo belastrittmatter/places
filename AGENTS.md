@@ -13,6 +13,9 @@ Entry: `expo-router/entry` with routes in `src/app/`. Scheme: `go2s`. Greenfield
 - Lint: `bun run lint`
 - Format: `bun run format`
 - Test: `bun run test` (Jest + jest-expo, never `bun test`) | watch: `bun run test:watch`
+- Git hooks (husky, installed by `prepare`): pre-commit runs lint-staged on staged files;
+  pre-push runs tsc and tests. Do not bypass with `--no-verify` unless the user asks; if a hook
+  fails, fix the cause.
 
 Test runner: Jest via `bun run test`. Stack: `jest-expo` preset, React Native Testing Library
 v14 + `test-renderer@1.2` (matches React 19.2, requires Node >=22.13). Tests live in
@@ -33,6 +36,9 @@ Config: `jest.config.js`, `jest-setup.js`.
 - `assets/`: icons, splash, favicon. Referenced from `app.json`.
 - `app.json`, `babel.config.js`, `metro.config.js`, `tailwind.config.js`, `global.css`: styling/native chain — change together.
 - `tsconfig.json`: `strict:true`, `baseUrl:"."`, alias `@/* -> ./src/*`.
+- `.husky/`: git hooks (pre-commit, pre-push). Config for lint-staged lives in `package.json`.
+- `.github/`: issue forms (`ISSUE_TEMPLATE/`), PR template, CI workflow. Change the forms and the
+  PR template together with the workflow steps they reference.
 
 ## Code style
 
@@ -71,7 +77,8 @@ export const Foo: React.FC<FooProps> = ({ title }) => (
 - Do not use `npm`/`yarn`/`pnpm` commands. This repo uses `bun`.
 - Do not commit `node_modules/`, `.expo/`, `dist/`, `web-build/`.
 - Do not add auth/secrets handling without updating this file with storage + review rules.
-- Do not commit files / create pull requests before explicitly being told to do so.
+- Do not commit to `main`, push, or create pull requests without the user's approval. Commits
+  on a task branch are allowed under Issue-driven work.
 - Never edit a file from memory — always `Read` it first in the current session and derive
   edits from the read result, unless the user explicitly says otherwise.
 
@@ -86,6 +93,26 @@ export const Foo: React.FC<FooProps> = ({ title }) => (
    then `bun run ios`) and exercise the changed surface. Jest mocks native modules
    and a Metro boot alone prove nothing here.
 6. Keep diff minimal; update this file if you change commands, layout, or styling chain.
+
+## Issue-driven work
+
+When given a GitHub issue (URL or number):
+
+1. Read the issue with `gh-axi issue` (or `gh issue view`). If Acceptance Criteria or
+   Affected Area is missing or unclear, ask before coding.
+2. Work in a git worktree, never by switching branches in the user's checkout. It may hold
+   unrelated uncommitted work. Use the worktree root `~/worktrees/places/`, outside the repo, so
+   tsc, Jest and Metro never see nested copies:
+   `git worktree add -b <type>/<issue#>-<slug> ~/worktrees/places/<issue#>-<slug> main`
+   then `bun install --frozen-lockfile` inside it. Branch `<type>` is a Conventional Commit type.
+3. Implement only the issue's Acceptance Criteria. Respect Out of Scope. Keep the smallest diff.
+4. Commit atomically: one logical change per commit, Conventional Commits. Each commit
+   passes `bunx tsc --noEmit` and `bun run lint`. Run `bun run test` before the final report.
+5. Native change in the issue: boot on simulator and exercise the feature before reporting done.
+6. Stop before the PR. Report: branch, commit list, verification output, and open questions.
+   Then wait for feedback. Do not push or open the PR until the user approves.
+7. On approval: push the branch, then `gh pr create --draft` with the body from
+   `.github/PULL_REQUEST_TEMPLATE.md`, title as a Conventional Commit, `Closes #<issue>`. Never merge.
 
 ## Commit etiquette
 

@@ -16,6 +16,22 @@ jest.mock('expo-maps', () => {
   };
 });
 
+jest.mock('@gorhom/bottom-sheet', () => {
+  const { FlatList, View } = require('react-native');
+  const BottomSheet = ({ children }: { children: object }) => <View>{children}</View>;
+  return { __esModule: true, default: BottomSheet, BottomSheetFlatList: FlatList };
+});
+
+jest.mock('expo-location', () => ({
+  requestForegroundPermissionsAsync: jest.fn().mockResolvedValue({ status: 'denied' }),
+  getCurrentPositionAsync: jest.fn(),
+}));
+
+jest.mock('modules/nearby-places/src/NearbyPlacesModule', () => ({
+  __esModule: true,
+  default: { searchNearby: jest.fn().mockResolvedValue([]) },
+}));
+
 describe('<HomeScreen />', () => {
   it('renders the map container on iOS', async () => {
     jest.replaceProperty(Platform, 'OS', 'ios');

@@ -1,0 +1,54 @@
+name: Bug Report
+description: Report something broken on iOS or Android. Include enough to reproduce it without asking.
+title: "[BUG] "
+labels: ["type:bug", "needs-triage"]
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal, numbered steps from a fresh start.
+      value: |
+        1. Run `bun run ios` (or `bun run android`)
+        2. Go to
+        3. Tap
+        4.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-actual
+    attributes:
+      label: Expected vs Actual
+      description: What should happen, and what happens instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - "iOS simulator"
+        - "iOS device"
+        - "Android emulator"
+        - "Android device"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Metro or device error output, stack trace. Optional.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What proves the bug is fixed.
+      value: |
+        - [ ] Root cause identified; fix applied in the shared code path
+        - [ ] Regression test added, or the reason it cannot be unit-tested is stated in the PR
+        - [ ] `bunx tsc --noEmit`, `bun run lint`, `bun run test` pass
+    validations:
+      required: true

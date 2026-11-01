@@ -13,6 +13,9 @@ Entry: `expo-router/entry` with routes in `src/app/`. Scheme: `go2s`. Greenfield
 - Lint: `bun run lint`
 - Format: `bun run format`
 - Test: `bun run test` (Jest + jest-expo, never `bun test`) | watch: `bun run test:watch`
+- Git hooks (husky, installed by `prepare`): pre-commit runs lint-staged on staged files;
+  pre-push runs tsc and tests. Do not bypass with `--no-verify` unless the user asks; if a hook
+  fails, fix the cause.
 
 Test runner: Jest via `bun run test`. Stack: `jest-expo` preset, React Native Testing Library
 v14 + `test-renderer@1.2` (matches React 19.2, requires Node >=22.13). Tests live in
@@ -33,6 +36,7 @@ Config: `jest.config.js`, `jest-setup.js`.
 - `assets/`: icons, splash, favicon. Referenced from `app.json`.
 - `app.json`, `babel.config.js`, `metro.config.js`, `tailwind.config.js`, `global.css`: styling/native chain — change together.
 - `tsconfig.json`: `strict:true`, `baseUrl:"."`, alias `@/* -> ./src/*`.
+- `.husky/`: git hooks (pre-commit, pre-push). Config for lint-staged lives in `package.json`.
 - `.github/`: issue forms (`ISSUE_TEMPLATE/`), PR template, CI workflow. Change the forms and the
   PR template together with the workflow steps they reference.
 

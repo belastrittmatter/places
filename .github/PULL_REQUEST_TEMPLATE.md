@@ -17,17 +17,14 @@ Closes #
 - [ ] `bunx tsc --noEmit`:
 - [ ] `bun run lint`:
 - [ ] `bun run test`:
+<!-- Native changes only. If none, delete this line from the PR. -->
 - [ ] Native change: booted on iOS simulator or device, feature exercised (not just Jest)
 - [ ] Not run, and why:
 
 ## Screenshots
 
-<!-- Required for UI changes. Delete the section otherwise. -->
+<!-- Only for UI changes. If none, delete this whole section from the PR. -->
 
 ## Risks and Rollback
 
 <!-- What could break for users, and how to revert. "None" is a valid answer. -->
-
-## AI Involvement
-
-<!-- Agent-written, human-reviewed: yes/no. Which parts were written by an agent. -->

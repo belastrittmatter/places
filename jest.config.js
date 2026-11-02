@@ -1,6 +1,8 @@
 /** @type {import('jest').Config} */
 module.exports = {
   preset: 'jest-expo',
+  testTimeout: process.env.CI ? 30_000 : 5_000,
+  slowTestThreshold: 3,
   resolver: '<rootDir>/node_modules/react-native-worklets/jest/resolver.js',
   modulePaths: ['<rootDir>'],
   testMatch: ['**/*-test.{ts,tsx}'],

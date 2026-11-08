@@ -26,6 +26,12 @@ NativeWind styles in Jest (v4 compiles `className` via the Metro pipeline, invis
 plain Jest — style coverage is intentionally out of scope).
 Config: `jest.config.js`, `jest-setup.js`.
 
+Timeout policy (single source: top-level `jest.config.js`): `testTimeout` is 30s under `CI` and
+5s locally, and CI runs `bun run test -- --runInBand`. Never override `testTimeout` per file or
+per test — a suite that needs more than 5s locally is a suite to fix, not to re-tune.
+`slowTestThreshold` is 3s: Jest only reports slow tests (there is no fail-on-slow), so use that
+output to slim suites before the CI budget bites.
+
 ## Layout
 
 - `src/app/`: file-based routes (Expo Router). `_layout.tsx` is root composition only

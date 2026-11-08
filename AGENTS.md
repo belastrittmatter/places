@@ -1,6 +1,6 @@
 # AGENTS.md — places
 
-Expo 57 + React 19 + React Native 0.86 + TypeScript strict + NativeWind (Tailwind 3.4).
+Expo 58 + React 19 + React Native 0.88 + TypeScript strict + NativeWind (Tailwind 3.4).
 Entry: `expo-router/entry` with routes in `src/app/`. Scheme: `go2s`. Greenfield, no backend/auth yet.
 
 ## Setup & run (bun only)
@@ -18,13 +18,19 @@ Entry: `expo-router/entry` with routes in `src/app/`. Scheme: `go2s`. Greenfield
   fails, fix the cause.
 
 Test runner: Jest via `bun run test`. Stack: `jest-expo` preset, React Native Testing Library
-v14 + `test-renderer@1.2` (matches React 19.2, requires Node >=22.13). Tests live in
+v14 + `test-renderer@1.3.1` (matches React 19.3, requires Node >=22.13). Tests live in
 `__tests__/` (or per-area `__tests__/` subdirs) as `*-test.{ts,tsx}` per Expo docs
 (e.g. `__tests__/ScreenContent-test.tsx`); always `await render(...)` + `screen.*` queries.
 Assert text/behaviour with RNTL queries (`getByText`, `toBeOnTheScreen()`); do not assert
 NativeWind styles in Jest (v4 compiles `className` via the Metro pipeline, invisible to
 plain Jest — style coverage is intentionally out of scope).
 Config: `jest.config.js`, `jest-setup.js`.
+
+Timeout policy (single source: top-level `jest.config.js`): `testTimeout` is 30s under `CI` and
+5s locally, and CI runs `bun run test -- --runInBand`. Never override `testTimeout` per file or
+per test — a suite that needs more than 5s locally is a suite to fix, not to re-tune.
+`slowTestThreshold` is 3s: Jest only reports slow tests (there is no fail-on-slow), so use that
+output to slim suites before the CI budget bites.
 
 ## Layout
 
